@@ -129,6 +129,8 @@ internal sealed class DependencyPropertyGenerator : IIncrementalGenerator
             TypeSyntax dependencyPropertyType = QualifiedName(NameOfMicrosoftUIXaml, IdentifierName("DependencyProperty"));
             string propertyName = $"{name}Property";
 
+            bool isPublic = attribute.HasNamedArgument("IsPublic", true);
+
             yield return FieldDeclaration(VariableDeclaration(dependencyPropertyType)
                 .WithVariables(SingletonSeparatedList(
                     VariableDeclarator(Identifier(propertyName))
@@ -139,7 +141,7 @@ internal sealed class DependencyPropertyGenerator : IIncrementalGenerator
                                         IdentifierName("DependencyProperty")),
                                     IdentifierName(isAttached ? "RegisterAttached" : "Register")))
                                 .WithArgumentList(ArgumentList(registerArguments)))))))
-                .WithModifiers(PrivateStaticReadonlyTokenList);
+                .WithModifiers(isPublic ? PublicStaticReadonlyTokenList : PrivateStaticReadonlyTokenList);
 
             if (!isAttached)
             {

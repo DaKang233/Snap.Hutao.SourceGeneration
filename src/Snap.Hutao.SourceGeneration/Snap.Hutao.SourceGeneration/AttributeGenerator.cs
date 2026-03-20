@@ -112,6 +112,9 @@ internal sealed class AttributeGenerator : IIncrementalGenerator
                             PropertyDeclaration(BoolType, Identifier("NotNull"))
                                 .WithModifiers(PublicTokenList)
                                 .WithAccessorList(GetAndSetAccessorList),
+                            PropertyDeclaration(BoolType, Identifier("IsPublic"))
+                                .WithModifiers(PublicTokenList)
+                                .WithAccessorList(GetAndSetAccessorList),
                         ])),
                     ClassDeclaration(Identifier("FieldAccessorAttribute"))
                         .WithAttributeLists(SingletonList(SystemAttributeUsageList(AttributeTargetsProperty, inherited: false)))
